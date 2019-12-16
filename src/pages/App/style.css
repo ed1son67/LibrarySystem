@@ -1,0 +1,23 @@
+@import '~antd/dist/antd.css';
+.layout {
+    height: 100vh;
+}
+
+.header-user {
+    width: 100px;
+    float: right;
+    text-align: left;
+    cursor: pointer;
+    font-size: 17px;
+}
+.header-user span {
+    padding: 0 5px;
+}
+.content {
+    padding: 10px;
+    background: #fff;
+    minHeight: 360px;
+    overflow: auto;
+}
+
+
