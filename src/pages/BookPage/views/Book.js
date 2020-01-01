@@ -30,7 +30,7 @@ class Book extends Component {
             )
         else
             return (
-                <div>
+                <div >
                     <Route path="/book/find" component={Find}></Route>
                     <Route path="/book/lend" component={Lend}></Route>
                 </div>

@@ -4,12 +4,10 @@ import '../style.css';
 import {Button, Form, Input, Table, Divider, Statistic} from 'antd';
 import {getBookRecommend, getBookStore, queryBook} from "../../../api/api";
 
-
-
 const bookStoreColumns = [
     {
         title: '图书编号',
-        dataIndex: 'bookNumber',
+        dataIndex: 'Bid',
     },
     {
         title: '图书名称',
@@ -32,15 +30,13 @@ const bookStoreColumns = [
         dataIndex: 'isReturn',
     },
     {
-        title: '应归还时间',
-        dataIndex: 'shouldReturnTime',
+        title: '图书库存',
+        dataIndex: 'bookNumber',
     },
 
 ];
 
 let bookStoreData = [];
-
-
 
 class Find extends Component {
     constructor(props) {
@@ -63,27 +59,19 @@ class Find extends Component {
         return array;
     }
     componentDidMount() {
-        getBookRecommend().then(res => {
-            console.log(res.data.message)
-        }).catch(err => {
-            console.log(err)
-        })
+
         getBookStore().then(res => {
-            console.log(res.data.message)
+            console.log(res.message)
 
             this.setState({
-                bookStore: res.data.message
+                bookStore: res.message
             })
-        }).catch(err => {
-            console.log(err)
         })
         // 获取所有的藏书
         queryBook().then(res => {
             this.setState({
-                bookDetail: res.data.message
+                bookDetail: res.message
             });
-        }).catch(err => {
-            console.log(err)
         })
     }
     searchBook(e) {
@@ -93,10 +81,8 @@ class Find extends Component {
             if (!err) {
                 queryBook(values.bookName).then(res => {
                     this.setState({
-                        bookDetail: res.data.message
+                        bookDetail: res.message
                     });
-                }).catch(err => {
-                    console.log(err)
                 })
             }
         });

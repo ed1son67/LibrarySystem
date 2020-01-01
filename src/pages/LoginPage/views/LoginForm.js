@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Form, Icon, Input, Button, message } from 'antd';
+import {Form, Icon, Input, Button, message, Checkbox} from 'antd';
 import {connect} from "react-redux";
 import {loginSuccess} from '../actions';
 import {login} from '../../../api/api';
@@ -14,15 +14,17 @@ class LoginForm extends Component {
         formData.append("userAccount", data.userAccount);
         formData.append("password", data.password);
 
-        login(formData).then(res =>{
-            if (res.data.result == "success") {
-                this.props.loginSuccess("123");
-            } else {
+        if (data.identity == false) data.identity = 0
+        else data.identity = 1;
 
+        formData.append("identity", data.identity);
+
+        login(formData).then(res =>{
+            if (res.result == "success") {
+                this.props.loginSuccess({identity: data.identity, userName: data.message});
+            } else {
+                message.error(res.message);
             }
-        }).catch(err => {
-            console.log(err);
-            message.error("登录失败，请检查网络后重试！");
         })
     }
     handleSubmit(e) {
@@ -58,6 +60,14 @@ class LoginForm extends Component {
                             type="password"
                             placeholder="请输入密码"
                         />,
+                    )}
+                </Form.Item>
+                <Form.Item>
+                    {getFieldDecorator('identity', {
+                        valuePropName: 'checked',
+                        initialValue: false,
+                    })(
+                       <Checkbox>管理员</Checkbox>
                     )}
                 </Form.Item>
                 <Form.Item>

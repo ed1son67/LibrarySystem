@@ -14,10 +14,10 @@
     padding: 0 5px;
 }
 .content {
-    padding: 10px;
+    padding: 20px;
     background: #fff;
-    minHeight: 360px;
-    overflow: auto;
+    min-height: 765px;
+    /*overflow: auto;*/
 }
 
 

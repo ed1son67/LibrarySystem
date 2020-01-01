@@ -1,1 +1,8 @@
+.slogan-container {
+    display: flex;
+}
+.slogan-container h1 {
+    font-size: 35px;
 
+
+}

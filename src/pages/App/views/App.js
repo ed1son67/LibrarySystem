@@ -19,7 +19,7 @@ import {view as Book} from '../../BookPage';
 const { Footer, Content, Sider} = Layout;
 
 const FooterCustom = () => (
-    <Footer style={{  textAlign: 'center', padding: '20px 50px'}}> ©CopyRight 2019 Created by Ed1son Chan</Footer>
+    <Footer style={{  textAlign: 'center', paddingBottom: '15   px'}}> ©CopyRight 2019 Created by Ed1son Chan</Footer>
 )
 
 class App extends Component {
@@ -44,8 +44,8 @@ class App extends Component {
                                 <MenuCustom />
                             </Sider>
                             <Layout>
-                                <BreadcrumbCustom/>
-                                <Content style={{ margin: '0 0 0 16px', overflow: 'auto'}}>
+                                {/*<BreadcrumbCustom/>*/}
+                                <Content style={{margin: '16px 0 0 16px', overflow: 'auto'}}>
                                     <div className="content" >
                                         <Route path="/" exact component={Welcome} />
                                         <Route path="/user/edit"  component={User} />
