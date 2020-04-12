@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Divider, DatePicker,Form, Input, Table, Modal, message} from 'antd';
 
-import {getNotReturnRecord, queryBook,lendBook,returnBook} from "../../../api/api";
+import {getNotReturnRecord, queryBook,lendBook,returnBook, getAllTickets, payTicket} from "../../../api/api";
 
 
 class Verify extends Component{
@@ -9,13 +9,15 @@ class Verify extends Component{
         super(props);
         this.state = {
             data: [],
+
             visible:false,
             borrowVisible: false,
             allBooksData: [],
             nowBid: null,
             nowUserAccount: null,
             confirmBorrowLoading: false,
-            confirmReturnLoading: false
+            confirmReturnLoading: false,
+            ticketsData: [],
         }
         this.searchStudent = this.searchStudent.bind(this);
         this.returnBook = this.returnBook.bind(this);
@@ -24,6 +26,8 @@ class Verify extends Component{
         this.returnBook = this.returnBook.bind(this);
         this.openBorrowModal = this.openBorrowModal.bind(this);
         this.openReturnModal = this.openReturnModal.bind(this);
+        this.getTickets = this.getTickets.bind(this);
+        this.tryPayTicket = this.tryPayTicket.bind(this);
     }
     getNotReturnData(userAccount = "") {
         getNotReturnRecord(userAccount).then(res => {
@@ -34,11 +38,12 @@ class Verify extends Component{
             }
         })
     }
-    componentDidMount() {
+    componentWillMount() {
         this.getNotReturnData();
         this.getAllBooks();
-    }
+        this.getTickets();
 
+    }
     searchStudent(e) {
         e.preventDefault();
 
@@ -132,6 +137,34 @@ class Verify extends Component{
 
         })
     }
+
+    /**
+     * 获得所有罚金记录
+     */
+    getTickets() {
+        getAllTickets().then(res => {
+            if (res.result == "success") {
+                this.setState({
+                    ticketsData: res.message
+                })
+            }
+        })
+    }
+    tryPayTicket(record) {
+        let formData = new FormData;
+        formData.append("Sno",record.Sno);
+        formData.append("Bno", record.Bno);
+
+        payTicket(formData).then(res=>{
+            if (res.result == 'success') {
+                message.success(res.message);
+                this.getTickets();
+            } else {
+                message.error(res.message);
+            }
+        })
+
+    }
     openReturnModal(userAccount, Bid) {
         this.setState({
             visible: true,
@@ -139,6 +172,7 @@ class Verify extends Component{
             nowUserAccount: userAccount
         })
     }
+
     openBorrowModal(Bid) {
         this.setState({
             borrowVisible: true,
@@ -148,7 +182,6 @@ class Verify extends Component{
     render() {
         const {getFieldDecorator} = this.props.form;
         const columns = [
-
             {
                 title: '学号',
                 dataIndex: 'userAccount',
@@ -181,6 +214,53 @@ class Verify extends Component{
                     let userAccount = record.userAccount;
                     return(
                         <Button type="primary" onClick={this.openReturnModal.bind(this, userAccount, Bid)}>还书</Button>
+                    )
+                }
+            }
+        ];
+        const ticketsColumn = [
+            {
+                title: '学号',
+                dataIndex: 'Saccount',
+            },
+            {
+                title: '学生名',
+                dataIndex: 'Sname',
+            },
+            {
+                title: '专业',
+                dataIndex: 'dept',
+            },
+            {
+                title: '图书编号',
+                dataIndex: 'Bid',
+            },
+            {
+                title: '图书名称',
+                dataIndex: 'Bname',
+            },
+            {
+                title: '借书时间',
+                dataIndex: 'borrow_date',
+            },
+            {
+                title: '应归还时间',
+                dataIndex: 'should_return_date',
+            },{
+                title: '超期天数',
+                dataIndex: 'over_date',
+            },
+            {
+                title: '罚金',
+                dataIndex: 'price'
+            },
+            {
+                title: '操作',
+                key: 'action',
+                render: (text, record) => {
+
+                    return(
+                        <Button type="primary" onClick={this.tryPayTicket.bind(this, record)}>支付罚金</Button>
                     )
                 }
             }
@@ -237,6 +317,13 @@ class Verify extends Component{
                     cancelText="取消"
                     okText="确定"
                     confirmLoading={this.state.confirmReturnLoading}
+                />
+
+                <Divider>超期名单</Divider>
+                <Table
+                    columns={ticketsColumn}
+                    dataSource={this.state.ticketsData}
+                    bordered
                 />
                 <Divider orientation="left">未还书名单</Divider>
 

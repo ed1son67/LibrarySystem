@@ -53,13 +53,11 @@ class Find extends Component {
     BookStore()  {
         let array = [];
         this.state.bookStore.forEach(element => {
-
             array.push(<Statistic title={element.bookType} style={{paddingRight: '30px'}} value={element.bookCount} suffix="本" />);
         })
         return array;
     }
     componentDidMount() {
-
         getBookStore().then(res => {
             console.log(res.message)
 
@@ -76,7 +74,6 @@ class Find extends Component {
     }
     searchBook(e) {
         e.preventDefault();
-
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 queryBook(values.bookName).then(res => {

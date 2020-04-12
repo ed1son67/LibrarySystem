@@ -21,7 +21,7 @@ class LoginForm extends Component {
 
         login(formData).then(res =>{
             if (res.result == "success") {
-                this.props.loginSuccess({identity: data.identity, userName: data.message});
+                this.props.loginSuccess({identity: data.identity, userName: res.message});
             } else {
                 message.error(res.message);
             }
@@ -32,7 +32,7 @@ class LoginForm extends Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 // 尝试登陆
-                console.log('Received values of form: ', values);
+
                 this.tryLogin(values);
             }
         });
@@ -87,11 +87,7 @@ const mapDispatchToProps = dispatch => {
         }
     }
 }
-const mapStateToProps = state => {
-    return {
 
-    }
-}
 LoginForm = Form.create({ name: 'normal_login' })(LoginForm);
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+export default connect(null, mapDispatchToProps)(LoginForm);

@@ -6,7 +6,6 @@ class Welcome extends Component {
         return(
             <div className="slogan-container">
                 <h1>欢迎使用 图书管理系统</h1>
-
             </div>
         )
     }

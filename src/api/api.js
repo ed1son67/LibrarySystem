@@ -9,7 +9,6 @@ export function login(data) {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
         },
-        withCredentials:true
     })
 }
 
@@ -20,8 +19,7 @@ export function lendBook(data) {
         method: 'post',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-        },
-        withCredentials:true
+        }
     })
 }
 
@@ -32,35 +30,21 @@ export function returnBook(data) {
         method: 'post',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-        },
-        withCredentials:true
+        }
     })
 }
 
-// export function upload() {
-//     return axios({
-//         data: data,
-//         url: url.upload,
-//         method: 'post',
-//         headers: {
-//             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-//         },
-//         withCredentials:true
-//     })
-// }
 export function logout() {
     return axios({
         url: url.logout,
-        method: 'post',
-        withCredentials:true
+        method: 'post'
     })
 }
 
 export function getUserInfo() {
     return axios({
         url: url.getUserInfo,
-        method: 'get',
-        withCredentials:true
+        method: 'post'
     })
 }
 
@@ -68,8 +52,7 @@ export function editUserInfo(data) {
     return axios({
         data: data,
         url: url.editUserInfo,
-        method: 'post',
-        withCredentials:true
+        method: 'post'
     })
 }
 
@@ -77,8 +60,7 @@ export function editPassword(data) {
     return axios({
         data: data,
         url: url.editPassword,
-        method: 'post',
-        withCredentials:true
+        method: 'post'
     })
 }
 
@@ -86,16 +68,14 @@ export function editPassword(data) {
 export function getBookRecommend() {
     return axios({
         url: url.getBookRecommend,
-        method: 'get',
-        withCredentials:true
+        method: 'get'
     })
 }
 
 export function getBookStore() {
     return axios({
         url: url.getBookStore,
-        method: 'get',
-        withCredentials:true
+        method: 'get'
     })
 }
 
@@ -118,6 +98,31 @@ export function getNotReturnRecord(userAccount = '') {
 export function getLendInfo() {
     return axios({
         url: url.getLendInfo,
+        method: 'post',
+        withCredentials: true
+    })
+}
+
+export function payTicket(data) {
+    return axios({
+        url: url.payTicket,
+        data: data,
+        method: 'post',
+        withCredentials: true
+    })
+}
+export function getTicket(data) {
+    return axios({
+        url: url.getTicket,
+        data: data,
+        method: 'post',
+        withCredentials: true
+    })
+}
+
+export function getAllTickets() {
+    return axios({
+        url: url.getAllTickets,
         method: 'post',
         withCredentials: true
     })

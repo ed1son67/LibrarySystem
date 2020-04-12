@@ -1,7 +1,7 @@
 import * as actionsTypes from './actionTypes';
 
 const initState = {
-    islogin: true,
+    islogin: false,
     userName: '',
     isAdmin: 1 // 0是学生，1是管理员，两者显示的菜单不一样
 }

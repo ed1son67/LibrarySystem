@@ -1,15 +1,10 @@
 import axios from 'axios';
 import {  message } from 'antd';
-let axioxInstance = axios.create();
+let axioxInstance = axios.create({
+    withCredentials: true
+});
 
-const statusCodeMessage = {
-
-
-}
-axioxInstance.interceptors.request.use(
-
-)
-
+// 响应拦截器
 axioxInstance.interceptors.response.use(
     res => {
         return res.data;

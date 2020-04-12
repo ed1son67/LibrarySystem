@@ -1,19 +1,32 @@
 import React, {Component} from "react";
 import {Form, Radio, Select, Divider, Input, Button, message} from 'antd';
 import {connect} from 'react-redux';
-
+import {editUserInfo} from '../../../api/api';
 const {Option} = Select;
+
 class InfoForm extends Component {
     constructor(props) {
         super(props);
-        console.log(this.props.form);
         this.submitInfo = this.submitInfo.bind(this);
+        this.tryEditUserInfo = this.tryEditUserInfo.bind(this);
+
     }
+
+
+    tryEditUserInfo() {
+        editUserInfo().then(res => {
+            if (res.result == 'success') {
+                message.success("修改成功！");
+            }
+        })
+    }
+
     submitInfo(e) {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log(values);
+                console.log(values)
+                this.tryEditUserInfo();
             }
         });
     }
@@ -45,17 +58,17 @@ class InfoForm extends Component {
             <div>
                 <Divider orientation="left">修改个人信息</Divider>
                 <Form {...formItemLayout} style={{padding: 20}} onSubmit={this.submitInfo}>
-                    <Form.Item label="手机号码">
-                        {getFieldDecorator('phone', {
-                            rules: [
-                                {
+                    {/*<Form.Item label="手机号码">*/}
+                    {/*    {getFieldDecorator('phone', {*/}
+                    {/*        rules: [*/}
+                    {/*            {*/}
 
-                                }
-                            ]
-                        })(
-                            <Input placeholder="请输入手机号码"/>
-                        )}
-                    </Form.Item>
+                    {/*            }*/}
+                    {/*        ]*/}
+                    {/*    })(*/}
+                    {/*        <Input placeholder="请输入手机号码"/>*/}
+                    {/*    )}*/}
+                    {/*</Form.Item>*/}
                     <Form.Item label="邮箱">
                         {getFieldDecorator('email', {
                             rules: [
@@ -70,18 +83,18 @@ class InfoForm extends Component {
                             rules: [],
                         })(
                             <Select placeholder="请选择专业">
-                                <Option value="china">软件工程</Option>
-                                <Option value="usa">网络工程</Option>
-                                <Option value="usa">信息安全</Option>
-                                <Option value="usa">计算机科学与技术</Option>
+                                <Option value="软件工程">软件工程</Option>
+                                <Option value="网络工程">网络工程</Option>
+                                <Option value="信息安全">信息安全</Option>
+                                <Option value="计算机科学与技术">计算机科学与技术</Option>
                             </Select>,
                         )}
                     </Form.Item>
                     <Form.Item label="性别">
                         {getFieldDecorator('sex')(
                             <Radio.Group>
-                                <Radio value="a">男</Radio>
-                                <Radio value="b">女</Radio>
+                                <Radio value="男">男</Radio>
+                                <Radio value="女">女</Radio>
                             </Radio.Group>,
                         )}
                     </Form.Item>
